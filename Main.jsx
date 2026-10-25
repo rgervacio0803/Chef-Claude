@@ -35,27 +35,37 @@ export default function Main() {
   }
 
   return (
-    <main>
-      <form action={addIngredient} className="add-ingredient-form">
-        <input
-          type="text"
-          placeholder="e.g. oregano"
-          aria-label="Add ingredient"
-          name="ingredient"
-        />
-        <button>Add ingredient</button>
-      </form>
+    <div>
+      <section className="hero-section">
+        <h2>What's in your kitchen?</h2>
+        <p>
+          Add your ingredients and let Chef Claude create a delicious recipe
+          just for you!
+        </p>
+      </section>
 
-      {ingredients.length > 0 && (
-        <IngredientsList
-          ingredients={ingredients}
-          getRecipe={getRecipe}
-          isLoading={isLoading}
-          removeIngredient={removeIngredient}
-        />
-      )}
-      {error && <p className="error-message">{error}</p>}
-      {recipe && <ClaudeRecipe recipe={recipe} />}
-    </main>
+      <main>
+        <form action={addIngredient} className="add-ingredient-form">
+          <input
+            type="text"
+            placeholder="e.g. oregano"
+            aria-label="Add ingredient"
+            name="ingredient"
+          />
+          <button>Add ingredient</button>
+        </form>
+
+        {ingredients.length > 0 && (
+          <IngredientsList
+            ingredients={ingredients}
+            getRecipe={getRecipe}
+            isLoading={isLoading}
+            removeIngredient={removeIngredient}
+          />
+        )}
+        {error && <p className="error-message">{error}</p>}
+        {recipe && <ClaudeRecipe recipe={recipe} />}
+      </main>
+    </div>
   );
 }
