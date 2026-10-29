@@ -1,9 +1,22 @@
-import Anthropic from "@anthropic-ai/sdk"
-import { HfInference } from '@huggingface/inference'
+import Anthropic from "@anthropic-ai/sdk";
+import { HfInference } from "@huggingface/inference";
 
 const SYSTEM_PROMPT = `
-You are an assistant that receives a list of ingredients that a user has and suggests a recipe they could make with some or all of those ingredients. You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, but try not to include too many extra ingredients. Format your response in markdown to make it easier to render to a web page
-`
+You are an assistant that receives a list of ingredients that a user has and suggests a recipe they could make with some or all of those ingredients. You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, but try not to include too many extra ingredients. Format your response in markdown to make it easier to render to a web page.
+
+At the end of every recipe, include a "Nutritional Information (per serving)" section with the following details:
+- Calories
+- Protein
+- Carbohydrates
+- Net Carbohydrates
+- Fat
+- Saturated Fat
+- Fiber
+- Sodium
+- Cholesterol
+
+These should be approximate values based on the recipe ingredients.
+`;
 
 // 🚨👉 ALERT: Read message below! You've been warned! 👈🚨
 // If you're following along on your local machine instead of
@@ -17,41 +30,50 @@ You are an assistant that receives a list of ingredients that a user has and sug
 // API keys private.
 
 const anthropic = new Anthropic({
-    apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
-    dangerouslyAllowBrowser: true,
-})
+  apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
 
 export async function getRecipeFromChefClaude(ingredientsArr) {
-    const ingredientsString = ingredientsArr.join(", ")
+  const ingredientsString = ingredientsArr.join(", ");
 
-    const msg = await anthropic.messages.create({
-        model: "claude-haiku-5-5",
-        max_tokens: 1024,
-        system: SYSTEM_PROMPT,
-        messages: [
-            { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!` },
-        ],
-    });
-    return msg.content[1].text
+  const msg = await anthropic.messages.create({
+    model: "claude-haiku-5-5",
+    max_tokens: 4000,
+    system: SYSTEM_PROMPT,
+    messages: [
+      {
+        role: "user",
+        content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`,
+      },
+    ],
+  });
+
+  console.log("full content:", JSON.stringify(msg.content)) 
+  const textContent = msg.content.find((block) => block.type === "text");
+  return textContent.text;
 }
 
-// Make sure you set an environment variable in Scrimba 
+// Make sure you set an environment variable in Scrimba
 // for HF_ACCESS_TOKEN
-const hf = new HfInference(import.meta.env.VITE_HF_ACCESS_TOKEN)
+const hf = new HfInference(import.meta.env.VITE_HF_ACCESS_TOKEN);
 
 export async function getRecipeFromMistral(ingredientsArr) {
-    const ingredientsString = ingredientsArr.join(", ")
-    try {
-        const response = await hf.chatCompletion({
-            model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
-            messages: [
-                { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!` },
-            ],
-            max_tokens: 1024,
-        })
-        return response.choices[0].message.content
-    } catch (err) {
-        console.error(err.message)
-    }
+  const ingredientsString = ingredientsArr.join(", ");
+  try {
+    const response = await hf.chatCompletion({
+      model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        {
+          role: "user",
+          content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`,
+        },
+      ],
+      max_tokens: 1024,
+    });
+    return response.choices[0].message.content;
+  } catch (err) {
+    console.error(err.message);
+  }
 }

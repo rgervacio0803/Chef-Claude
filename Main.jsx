@@ -65,6 +65,23 @@ export default function Main() {
         </p>
       </section>
 
+      <section className="workflow-section">
+        <div className="workflow-step">
+          <span className="workflow-number">1</span>
+          <p>Add at least 4 ingredients</p>
+        </div>
+        <div className="workflow-arrow">→</div>
+        <div className="workflow-step">
+          <span className="workflow-number">2</span>
+          <p>Click "Get a recipe"</p>
+        </div>
+        <div className="workflow-arrow">→</div>
+        <div className="workflow-step">
+          <span className="workflow-number">3</span>
+          <p>Save your favorites</p>
+        </div>
+      </section>
+
       <main>
         <form action={addIngredient} className="add-ingredient-form">
           <input
@@ -75,6 +92,14 @@ export default function Main() {
           />
           <button>Add ingredient</button>
         </form>
+
+        <p className="ingredients-hint">
+          {ingredients.length === 0 && "💡 Start by adding ingredients above!"}
+          {ingredients.length > 0 &&
+            ingredients.length <= 3 &&
+            `💡 Add ${4 - ingredients.length} more ingredient${4 - ingredients.length === 1 ? "" : "s"} to get a recipe!`}
+          {ingredients.length > 3 && "✅ Ready to get a recipe!"}
+        </p>
 
         {ingredients.length > 0 && (
           <IngredientsList

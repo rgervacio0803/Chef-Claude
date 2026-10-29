@@ -386,3 +386,54 @@ ul.ingredients-list > li:last-child {
 .delete-saved-btn {
     margin-top: 15px;  /* ✅ adds space above delete button */
 }
+
+.workflow-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 30px;
+    background: white;
+    border-bottom: 1px solid #F0EFEB;
+}
+
+.workflow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+}
+
+.workflow-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8B2E00, #D17557);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.workflow-step p {
+    color: #6B5C4E;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.workflow-arrow {
+    color: #D17557;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.ingredients-hint {
+    text-align: center;
+    color: #6B5C4E;
+    font-size: 0.875rem;
+    margin-top: 10px;
+    font-style: italic;
+}
