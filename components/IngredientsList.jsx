@@ -12,7 +12,15 @@ export default function IngredientsList(props) {
     ))
     return (
         <section>
-            <h2>Ingredients on hand:</h2>
+            <div className="ingredients-header">
+                <h2 className="ingredients-list-title">Ingredients on hand:</h2>
+                <button 
+                    className="clear-btn"
+                    onClick={props.clearIngredients}
+                >
+                    🗑️ Clear All
+                </button>
+            </div>
             <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
             {props.ingredients.length > 3 && <div className="get-recipe-container">
                 <div>

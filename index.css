@@ -259,3 +259,130 @@ ul.ingredients-list > li:last-child {
     font-size: 0.875rem;
     border-left: 4px solid #DC2626;
 }
+
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.copy-btn {
+    border: 2px solid #D17557;
+    border-radius: 8px;
+    background: none;
+    color: #D17557;
+    padding: 8px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.copy-btn:hover {
+    background: #D17557;
+    color: white;
+}
+
+.ingredients-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.clear-btn {
+    border: 2px solid #DC2626;
+    border-radius: 8px;
+    background: none;
+    color: #DC2626;
+    padding: 6px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.clear-btn:hover {
+    background: #DC2626;
+    color: white;
+}
+
+.recipe-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.save-btn {
+    border: 2px solid #8B2E00;
+    border-radius: 8px;
+    background: none;
+    color: #8B2E00;
+    padding: 8px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.save-btn:hover {
+    background: #8B2E00;
+    color: white;
+}
+
+.saved-recipes {
+    margin-top: 40px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+}
+
+.saved-recipes h2 {
+    font-family: 'Playfair Display', serif;
+    color: #8B2E00;
+    margin-bottom: 20px;
+}
+
+.saved-recipe-item {
+    border-bottom: 2px solid #FDF6EC;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.delete-saved-btn {
+    margin-top: 15px;
+    border: 2px solid #DC2626;
+    border-radius: 8px;
+    background: none;
+    color: #DC2626;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.delete-saved-btn:hover {
+    background: #DC2626;
+    color: white;
+}
+
+.saved-recipe-title {
+    font-family: 'Playfair Display', serif;
+    color: #8B2E00;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    background: #FDF6EC;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.delete-saved-btn {
+    margin-top: 15px;  /* ✅ adds space above delete button */
+}
