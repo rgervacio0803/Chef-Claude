@@ -12,12 +12,16 @@ export default function Main() {
   const [savedRecipes, setSavedRecipes] = React.useState(
     JSON.parse(localStorage.getItem("savedRecipes")) || [],
   );
+  const [servings, setServings] = React.useState(2);
 
   async function getRecipe() {
     setIsLoading(true);
     setError(null); // clear previous errors
     try {
-      const recipeMarkdown = await getRecipeFromChefClaude(ingredients);
+      const recipeMarkdown = await getRecipeFromChefClaude(
+        ingredients,
+        servings,
+      );
       setRecipe(recipeMarkdown);
     } catch (err) {
       console.error(err);
@@ -108,6 +112,8 @@ export default function Main() {
             isLoading={isLoading}
             removeIngredient={removeIngredient}
             clearIngredients={clearIngredients}
+            servings={servings}
+            setServings={setServings}
           />
         )}
         {error && <p className="error-message">{error}</p>}

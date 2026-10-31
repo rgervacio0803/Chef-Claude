@@ -27,6 +27,12 @@ export default function IngredientsList(props) {
                     <h3>Ready for a recipe?</h3>
                     <p>Generate a recipe from your list of ingredients.</p>
                 </div>
+                <div className="servings-adjuster">
+                        <span>Servings</span>
+                        <button onClick={() => props.setServings(prev => Math.max(1, prev - 1))}>−</button>
+                        <span className="servings-count">{props.servings}</span>
+                        <button onClick={() => props.setServings(prev => Math.min(12, prev + 1))}>+</button>
+                    </div>
                 <button 
                 onClick={props.getRecipe}
                 disabled={props.isLoading}

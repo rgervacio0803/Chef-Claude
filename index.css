@@ -440,6 +440,40 @@ ul.ingredients-list > li:last-child {
     font-style: italic;
 }
 
+.servings-adjuster {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #6B5C4E;
+}
+
+.get-recipe-container .servings-adjuster button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #D17557;
+    background: none;
+    box-shadow: none;
+    color: #D17557;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+}
+
+.get-recipe-container .servings-adjuster button:hover {
+    background: #D17557;
+    color: white;
+}
+
+.servings-count {
+    min-width: 20px;
+    text-align: center;
+    font-weight: 700;
+    color: #8B2E00;
+}
+
 @media (max-width: 768px) {
     body {
         font-size: 16px;
