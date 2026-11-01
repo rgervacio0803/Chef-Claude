@@ -34,22 +34,44 @@ const anthropic = new Anthropic({
   dangerouslyAllowBrowser: true,
 });
 
-export async function getRecipeFromChefClaude(ingredientsArr, servings = 2) {
-  const ingredientsString = ingredientsArr.join(", ");
+function buildPreferenceText(servings, preferences) {
+    const lines = [`Make it for ${servings} servings.`]
 
-  const msg = await anthropic.messages.create({
-    model: "claude-haiku-5-5",
-    max_tokens: 4000,
-    system: SYSTEM_PROMPT,
-    messages: [
+    if (preferences.maxTime) {
+        lines.push(`The total cooking time must be ${preferences.maxTime} minutes or less.`)
+    }
+    if (preferences.diet) {
+        lines.push(`The recipe must be ${preferences.diet}.`)
+    }
+    if (preferences.avoid.trim()) {
+        lines.push(`Do not use any of these ingredients: ${preferences.avoid}.`)
+    }
+
+    return lines.join(" ")
+}
+
+export async function getRecipeFromChefClaude(
+    ingredientsArr,
+    servings = 2,
+    preferences = { maxTime: "", diet: "", avoid: "" }
+) {
+    const ingredientsString = ingredientsArr.join(", ")
+    const preferenceText = buildPreferenceText(servings, preferences)
+
+    const msg = await anthropic.messages.create({
+        model: "claude-haiku-5-5",
+        max_tokens: 4000,
+        system: SYSTEM_PROMPT,
+        messages: [
             {
                 role: "user",
-                content: `I have ${ingredientsString}. Please give me a recipe for ${servings} servings that you'd recommend I make!`
+                content: `I have ${ingredientsString}. ${preferenceText} Please give me a recipe you'd recommend I make!`
             }
         ],
-  });
-  const textContent = msg.content.find((block) => block.type === "text");
-  return textContent.text;
+    })
+
+    const textContent = msg.content.find(block => block.type === "text")
+    return textContent.text
 }
 
 // Make sure you set an environment variable in Scrimba

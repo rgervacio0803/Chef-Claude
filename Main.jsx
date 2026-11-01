@@ -13,6 +13,11 @@ export default function Main() {
     JSON.parse(localStorage.getItem("savedRecipes")) || [],
   );
   const [servings, setServings] = React.useState(2);
+  const [preferences, setPreferences] = React.useState({
+    maxTime: "",
+    diet: "",
+    avoid: "",
+  });
 
   async function getRecipe() {
     setIsLoading(true);
@@ -21,6 +26,7 @@ export default function Main() {
       const recipeMarkdown = await getRecipeFromChefClaude(
         ingredients,
         servings,
+        preferences,
       );
       setRecipe(recipeMarkdown);
     } catch (err) {
@@ -57,6 +63,10 @@ export default function Main() {
     const newSavedRecipes = savedRecipes.filter((_, i) => i !== index);
     setSavedRecipes(newSavedRecipes);
     localStorage.setItem("savedRecipes", JSON.stringify(newSavedRecipes));
+  }
+
+  function updatePreference(name, value) {
+    setPreferences((prev) => ({ ...prev, [name]: value }));
   }
 
   return (
@@ -114,6 +124,8 @@ export default function Main() {
             clearIngredients={clearIngredients}
             servings={servings}
             setServings={setServings}
+            preferences={preferences}
+            updatePreference={updatePreference}
           />
         )}
         {error && <p className="error-message">{error}</p>}
