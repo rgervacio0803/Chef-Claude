@@ -1,7 +1,7 @@
 import React from "react";
 import IngredientsList from "./components/IngredientsList";
 import ClaudeRecipe from "./components/ClaudeRecipe";
-import { getRecipeFromChefClaude, getRecipeFromMistral } from "./ai";
+import { getRecipeFromChefClaude } from "./ai"
 import ReactMarkdown from "react-markdown";
 
 export default function Main() {
