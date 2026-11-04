@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 export default function Main() {
   const [ingredients, setIngredients] = React.useState([]);
   const [recipe, setRecipe] = React.useState("");
+  const recipeSection = React.useRef(null)
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [savedRecipes, setSavedRecipes] = React.useState(
@@ -18,6 +19,12 @@ export default function Main() {
     diet: "",
     avoid: "",
   });
+
+  React.useEffect(() => {
+        if (recipe !== "" && recipeSection.current !== null) {
+            recipeSection.current.scrollIntoView()
+        }
+    }, [recipe])
 
   async function getRecipe() {
     setIsLoading(true);
@@ -117,6 +124,7 @@ export default function Main() {
 
         {ingredients.length > 0 && (
           <IngredientsList
+             ref={recipeSection}
             ingredients={ingredients}
             getRecipe={getRecipe}
             isLoading={isLoading}
