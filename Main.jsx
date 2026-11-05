@@ -1,13 +1,13 @@
 import React from "react";
 import IngredientsList from "./components/IngredientsList";
 import ClaudeRecipe from "./components/ClaudeRecipe";
-import { getRecipeFromChefClaude } from "./ai"
+import { getRecipeFromChefClaude } from "./ai";
 import ReactMarkdown from "react-markdown";
 
 export default function Main() {
   const [ingredients, setIngredients] = React.useState([]);
   const [recipe, setRecipe] = React.useState("");
-  const recipeSection = React.useRef(null)
+  const recipeSection = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [savedRecipes, setSavedRecipes] = React.useState(
@@ -21,10 +21,10 @@ export default function Main() {
   });
 
   React.useEffect(() => {
-        if (recipe !== "" && recipeSection.current !== null) {
-            recipeSection.current.scrollIntoView()
-        }
-    }, [recipe])
+    if (recipe !== "" && recipeSection.current !== null) {
+      recipeSection.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [recipe]);
 
   async function getRecipe() {
     setIsLoading(true);
@@ -36,9 +36,10 @@ export default function Main() {
         preferences,
       );
       setRecipe(recipeMarkdown);
-    } catch (err) {
+        } catch (err) {
       console.error(err);
-      setError("Something went wrong! Please try again.");
+      setRecipe("");
+      setError(err.message || "Something went wrong! Please try again.");
     } finally {
       setIsLoading(false); // always stop loading
     }
@@ -124,7 +125,7 @@ export default function Main() {
 
         {ingredients.length > 0 && (
           <IngredientsList
-             ref={recipeSection}
+            ref={recipeSection}
             ingredients={ingredients}
             getRecipe={getRecipe}
             isLoading={isLoading}
