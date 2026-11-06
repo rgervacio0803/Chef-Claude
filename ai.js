@@ -27,5 +27,5 @@ export async function getRecipeFromChefClaude(
     throw new Error(result.error || "Failed to get recipe")
   }
 
-  return result.recipe
+    return { recipe: result.recipe, used: result.used, limit: result.limit }
 }

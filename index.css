@@ -612,6 +612,13 @@ ul.ingredients-list > li:last-child {
     cursor: pointer;
 }
 
+.usage-note {
+    text-align: center;
+    color: #6B5C4E;
+    font-size: 0.875rem;
+    margin: 10px 0 0;
+}
+
 @media (max-width: 768px) {
     body {
         font-size: 16px;

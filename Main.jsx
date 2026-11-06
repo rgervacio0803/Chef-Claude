@@ -14,6 +14,7 @@ export default function Main() {
     JSON.parse(localStorage.getItem("savedRecipes")) || [],
   );
   const [servings, setServings] = React.useState(2);
+  const [usage, setUsage] = React.useState(null);
   const [preferences, setPreferences] = React.useState({
     maxTime: "",
     diet: "",
@@ -30,13 +31,14 @@ export default function Main() {
     setIsLoading(true);
     setError(null); // clear previous errors
     try {
-      const recipeMarkdown = await getRecipeFromChefClaude(
+      const result = await getRecipeFromChefClaude(
         ingredients,
         servings,
         preferences,
       );
-      setRecipe(recipeMarkdown);
-        } catch (err) {
+      setRecipe(result.recipe);
+      setUsage({ used: result.used, limit: result.limit });
+    } catch (err) {
       console.error(err);
       setRecipe("");
       setError(err.message || "Something went wrong! Please try again.");
@@ -136,6 +138,11 @@ export default function Main() {
             preferences={preferences}
             updatePreference={updatePreference}
           />
+        )}
+        {usage && (
+          <p className="usage-note">
+            {usage.used} of {usage.limit} free recipes used this month
+          </p>
         )}
         {error && <p className="error-message">{error}</p>}
         {recipe && <ClaudeRecipe recipe={recipe} saveRecipe={saveRecipe} />}
